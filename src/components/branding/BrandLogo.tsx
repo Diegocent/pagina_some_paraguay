@@ -61,7 +61,7 @@ export function BrandLogo({
         alt="SOME Paraguay"
         decoding="async"
         className={cn(
-          "block h-9 w-auto max-h-11 max-w-[min(180px,42vw)] object-contain object-left",
+          "block h-12 w-auto max-h-14 max-w-[min(200px,48vw)] object-contain object-left",
           variant === "footer" &&
             "max-h-12 max-w-[200px] rounded-md bg-white px-2 py-1.5",
           variant === "hero" &&

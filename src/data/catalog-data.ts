@@ -228,6 +228,14 @@ export const RAW_CATALOG: CatalogSourceRow[] = [
     imageCode: "banco_plano_estandar",
   },
   {
+    id: "banco_plano_premiun",
+    title: "Banco plano premium",
+    description:
+      "Banco plano premium de mayor robustez y acabado profesional, ideal para press y trabajo con mancuernas.",
+    price: 700_000,
+    imageCode: "banco_plano_premiun",
+  },
+  {
     id: "pelota_medicinal_3kg",
     title: "Pelota medicinal — 3 kg",
     description:
@@ -354,14 +362,6 @@ export const RAW_CATALOG: CatalogSourceRow[] = [
       "Set de poleas para entrenamiento de fuerza y trabajo de cable en casa o gym.",
     price: 165_000,
     imageCode: "set_de_poleas",
-  },
-  {
-    id: "set_polea",
-    title: "Set de polea",
-    description:
-      "Set de polea para entrenamiento funcional de fuerza.",
-    price: 165_000,
-    imageCode: "set_polea",
   },
   {
     id: "combo_gluteos",
