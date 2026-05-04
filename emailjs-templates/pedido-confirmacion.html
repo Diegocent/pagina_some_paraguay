@@ -1,0 +1,54 @@
+<div style="font-family: system-ui, sans-serif, Arial; font-size: 14px; color: #333; padding: 14px 8px; background-color: #f5f5f5;">
+  <div style="max-width: 600px; margin: auto; background-color: #fff;">
+    <div style="border-top: 6px solid #458500; padding: 16px;">
+      <span style="font-size: 16px; vertical-align: middle;"><strong>Gracias por elegirnos</strong></span>
+    </div>
+
+    <div style="padding: 0 16px 16px;">
+      <p>Hola {{customer_name}},</p>
+      <p>Te compartimos la información referente al pedido realizado.</p>
+
+      <div style="margin: 16px 0; padding: 12px; background: #fafafa; border-radius: 8px; border: 1px solid #eee;">
+        <div style="font-weight: bold; margin-bottom: 8px;">Datos de envío y contacto</div>
+        <div style="line-height: 1.6;">
+          <div><strong>Teléfono:</strong> {{customer_phone}}</div>
+          <div><strong>Ciudad:</strong> {{shipping_city}}</div>
+          <div><strong>Dirección:</strong> {{shipping_address}}</div>
+        </div>
+      </div>
+
+      <div style="text-align: left; font-size: 14px; padding-bottom: 4px; border-bottom: 2px solid #333;">
+        <strong>Orden #{{order_id}}</strong>
+      </div>
+
+      {{#orders}}
+      <table style="width: 100%; border-collapse: collapse;">
+        <tbody>
+          <tr style="vertical-align: top;">
+            <td style="padding: 24px 8px 0 4px; width: 72px;">
+              <img style="height: 64px; width: 64px; object-fit: cover; border-radius: 6px;" src="{{image_url}}" alt="" height="64" width="64">
+            </td>
+            <td style="padding: 24px 8px 0 8px;">
+              <div>{{name}}</div>
+              <div style="font-size: 14px; color: #888; padding-top: 4px;">Cant.: {{units}}</div>
+            </td>
+            <td style="padding: 24px 4px 0 0; white-space: nowrap; text-align: right;"><strong>{{price}}</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      {{/orders}}
+
+      <div style="margin-top: 8px; padding-top: 20px; border-top: 2px solid #333; text-align: right;">
+        <span style="font-size: 15px; color: #333;">Total del pedido:</span>
+        <span style="display: inline-block; font-size: 20px; font-weight: bold; margin-left: 10px; color: #222;">{{order_total}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width: 600px; margin: auto; padding-top: 8px;">
+    <p style="color: #999; font-size: 12px;">
+      Este correo se envió a {{email}}.<br>
+      Recibiste este mensaje porque realizaste un pedido en nuestra tienda.
+    </p>
+  </div>
+</div>

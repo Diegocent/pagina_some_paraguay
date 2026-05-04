@@ -1,0 +1,2 @@
+# Fotos del catálogo servidas sin procesar por Vite: /products/{imageCode}.png
+# Ejemplo: step_madera.png → coincide con imageCode "step_madera"
