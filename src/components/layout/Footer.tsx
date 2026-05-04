@@ -32,13 +32,13 @@ export function Footer() {
           <p className="text-sm font-semibold text-white">Enlaces rápidos</p>
           <ul className="space-y-2 text-sm">
             <li>
-              <a className="hover:text-white" href="#catalogo">
-                Catálogo
+              <a className="hover:text-white" href="#destacados">
+                Destacados
               </a>
             </li>
             <li>
-              <a className="hover:text-white" href="#destacados">
-                Destacados
+              <a className="hover:text-white" href="#catalogo">
+                Catálogo
               </a>
             </li>
             <li>
