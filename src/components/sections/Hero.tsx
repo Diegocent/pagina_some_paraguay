@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { WaIcon } from "@/components/branding/WaIcon";
 
 const HERO_BG =
   "https://image.slidesdocs.com/responsive-images/background/training-equipment-in-of-dark-concept-fitness-room-featuring-black-dumbbells-on-the-floor-in-3d-rendering-powerpoint-background_5dbb56997b__960_540.jpg";
@@ -42,14 +43,31 @@ export function Hero() {
                 <ArrowRight className="h-5 w-5" aria-hidden />
               </a>
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-xl border-white/40 bg-white/10 text-white hover:bg-white/15"
-              asChild
-            >
-              <a href="#destacados">Destacados</a>
-            </Button>
+            <div className="flex flex-wrap gap-4">
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-xl border-white/40 bg-white/10 text-white hover:bg-white/15"
+                asChild
+              >
+                <a href="#destacados">Destacados</a>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="gap-2 rounded-xl border-green-400/50 bg-green-500/10 text-green-300 hover:bg-green-500/20 hover:text-green-200"
+                asChild
+              >
+                <a
+                  href={`https://wa.me/${(import.meta.env.VITE_WHATSAPP_BUSINESS_PHONE ?? "").replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <WaIcon className="h-5 w-5" />
+                  WhatsApp
+                </a>
+              </Button>
+            </div>
           </div>
         </motion.div>
 

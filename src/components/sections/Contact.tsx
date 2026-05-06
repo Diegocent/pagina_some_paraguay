@@ -1,6 +1,7 @@
 import { type FormEvent, useState } from "react";
-import { Mail, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { IgIcon } from "@/components/branding/IgIcon";
+import { WaIcon } from "@/components/branding/WaIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -120,13 +121,17 @@ export function Contact() {
             respondemos con opciones concretas.
           </p>
           <div className="flex flex-wrap gap-4 pt-2">
-            <a
-              href="mailto:hola@milkasport.demo"
-              className="inline-flex items-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium text-neutral-900 shadow-sm transition hover:border-neutral-300"
-            >
-              <Mail className="h-4 w-4 text-brand-red" aria-hidden />
-              hola@milkasport.demo
-            </a>
+            {whatsappDigits && (
+              <a
+                href={`https://wa.me/${whatsappDigits}`}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-neutral-900 shadow-sm transition hover:border-green-400 hover:text-green-700"
+              >
+                <WaIcon className="h-4 w-4 text-green-500" />
+                Escribinos al WhatsApp
+              </a>
+            )}
             <a
               href="https://www.instagram.com/some.paraguay"
               target="_blank"

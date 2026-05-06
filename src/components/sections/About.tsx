@@ -47,7 +47,7 @@ export function About() {
             Tu próximo PB empieza con el equipo correcto.
           </h2>
           <p className="text-neutral-300">
-            Somos un equipo obsesionado con la calidad útil: stock curado de
+            Somos un equipo obsesionado con la calidad útil: stock especializado de
             indumentaria deportiva y artículos de gimnasio para quienes entrenan
             en serio — desde el primer calentamiento hasta la última serie.
           </p>

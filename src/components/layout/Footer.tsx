@@ -15,7 +15,7 @@ export function Footer() {
             SOME Paraguay
           </p>
           <p className="text-sm leading-relaxed">
-            Indumentaria deportiva y artículos de gimnasio curados para entrenar con
+            Indumentaria deportiva y artículos de gimnasio seleccionados para entrenar con
             intención.
           </p>
           <a
