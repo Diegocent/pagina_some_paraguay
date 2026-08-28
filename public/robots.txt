@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Cuando tengas dominio público, agrega una línea del estilo:
-# Sitemap: https://www.tudominio.com.py/sitemap.xml
+Sitemap: https://www.someparaguay.com/sitemap.xml

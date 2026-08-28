@@ -14,6 +14,10 @@ interface ImportMetaEnv {
   readonly VITE_BUSINESS_ADDRESS_LINE?: string;
   /** URL absoluta del logo si no usás archivo en public/assets con nombre estándar. */
   readonly VITE_SITE_LOGO_URL?: string;
+  /** Origen público del sitio, sin barra final (ej. https://www.someparaguay.com). */
+  readonly VITE_SITE_URL?: string;
+  /** Token de verificación HTML de Google Search Console. */
+  readonly VITE_GOOGLE_SITE_VERIFICATION?: string;
 }
 
 interface ImportMeta {

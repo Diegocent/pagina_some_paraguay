@@ -1,46 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Pasos antes de producción:
-  1) Buscar https://example.com y reemplazar por tu dominio público (ej. https://www.tudominio.com.py).
-  2) Actualizar <lastmod> y los bloques <image:image> cuando cambie el catálogo / URLs en src/data/products.ts.
--->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://example.com/</loc>
+    <loc>https://www.someparaguay.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <lastmod>2026-04-29</lastmod>
-    <!-- Imágenes usadas por los productos actuales (sincronizar al cambiar products.ts o las fotos definitivas) -->
-    <image:image>
-      <image:loc>https://res.cloudinary.com/demo/image/upload/q_auto,f_auto,w_800,h_900,c_fill/v1710420000/samples/ecommerce/leather-bag-gray</image:loc>
-      <image:title>Tobilleras con peso ajustables — Milka Sport</image:title>
-      <image:caption>Producto ankle-1</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/demo/image/upload/q_auto,f_auto,w_800,h_900,c_fill/v1710420000/samples/ecommerce/accessories-bag</image:loc>
-      <image:title>Mochila deportiva impermeable — Milka Sport</image:title>
-      <image:caption>Producto bag-1</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/demo/image/upload/q_auto,f_auto,w_800,h_900,c_fill/v1710420000/samples/upscale-face-1</image:loc>
-      <image:title>Chaleco lastrado táctico — Milka Sport</image:title>
-      <image:caption>Producto vest-1</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/demo/image/upload/q_auto,f_auto,w_800,h_900,c_fill/v1710420000/samples/basketball</image:loc>
-      <image:title>Pelota medicinal 8 kg — Milka Sport</image:title>
-      <image:caption>Producto ball-1</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/demo/image/upload/q_auto,f_auto,w_800,h_900,c_fill/v1710420000/samples/shoes</image:loc>
-      <image:title>Set bandas elásticas PRO — Milka Sport</image:title>
-      <image:caption>Producto band-1</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/demo/image/upload/q_auto,f_auto,w_800,h_900,c_fill/v1710420000/samples/outdoor-shoes</image:loc>
-      <image:title>Mat yoga alta densidad — Milka Sport</image:title>
-      <image:caption>Producto mat-1</image:caption>
-    </image:image>
+    <lastmod>2026-08-28</lastmod>
   </url>
 </urlset>

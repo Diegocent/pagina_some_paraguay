@@ -1,7 +1,11 @@
+/** Origen público del sitio (sin barra final). */
+export const SITE_ORIGIN = "https://www.someparaguay.com";
+
 /**
  * Ubicación del negocio (sección «Sobre nosotros»).
  * Editá dirección y enlace al mapa aquí o definí `VITE_BUSINESS_MAP_URL` / `VITE_BUSINESS_ADDRESS_LINE` en `.env`.
  */
+
 export const SITE_LOCATION = {
   /** Dirección o referencia corta visible en pantalla */
   addressLine: "Asunción, Paraguay",
