@@ -22,6 +22,7 @@ export interface CartState {
 export interface CartContextValue extends CartState {
   itemCount: number;
   subtotal: number;
+  hasUnpriced: boolean;
   addProduct: (product: Product, quantity?: number) => void;
   removeLine: (productId: string) => void;
   setQuantity: (productId: string, quantity: number) => void;

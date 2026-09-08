@@ -1,11 +1,12 @@
 import emailjs from "@emailjs/browser";
 import type { CartLine, ShippingDetails } from "@/context/cart-types";
-import { formatPyg } from "@/lib/format-currency";
+import { formatCartTotal, formatLinePrice } from "@/lib/format-currency";
 
 export interface EmailOrderPayload {
   customer: ShippingDetails;
   lines: CartLine[];
   total: number;
+  hasUnpriced?: boolean;
 }
 
 /** Fila para plantillas EmailJS tipo Handlebars {{#orders}} … {{/orders}} */
@@ -50,8 +51,9 @@ export async function processOrder(payload: EmailOrderPayload): Promise<void> {
   const orderLines = payload.lines
     .map(
       (l) =>
-        `${l.product.title} × ${l.quantity} — ${formatPyg(
-          l.product.price * l.quantity,
+        `${l.product.title} × ${l.quantity} — ${formatLinePrice(
+          l.product.price,
+          l.quantity,
         )}`,
     )
     .join("\n");
@@ -60,7 +62,7 @@ export async function processOrder(payload: EmailOrderPayload): Promise<void> {
     image_url: l.product.imageUrl,
     name: l.product.title,
     units: l.quantity,
-    price: formatPyg(l.product.price * l.quantity),
+    price: formatLinePrice(l.product.price, l.quantity),
   }));
 
   const orderId = `WEB-${Date.now().toString(36).toUpperCase()}`;
@@ -87,7 +89,7 @@ export async function processOrder(payload: EmailOrderPayload): Promise<void> {
       shipping_postal: "-",
       orders,
       order_lines: orderLines,
-      order_total: formatPyg(payload.total),
+      order_total: formatCartTotal(payload.total, payload.hasUnpriced ?? false),
       order_total_note: "Total productos (sin incluir envío/delivery)",
       reply_to: payload.customer.email,
     },

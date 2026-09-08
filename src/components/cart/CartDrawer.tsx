@@ -14,7 +14,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import type { ShippingDetails } from "@/context/cart-types";
 import { useCart } from "@/context/CartContext";
-import { formatPyg } from "@/lib/format-currency";
+import { formatCartTotal, formatLinePrice } from "@/lib/format-currency";
 import { processOrder } from "@/services/order";
 import { openWhatsAppOrder } from "@/utils/whatsapp";
 
@@ -54,11 +54,12 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
         customer: details,
         lines: cart.lines,
         total: cart.subtotal,
+        hasUnpriced: cart.hasUnpriced,
       });
       toast({
         variant: "success",
         title: "¡Pedido enviado!",
-        description: `Total productos ${formatPyg(cart.subtotal)} (sin delivery; revisá tu correo).`,
+        description: `Total productos ${formatCartTotal(cart.subtotal, cart.hasUnpriced)} (sin delivery; revisá tu correo).`,
       });
       cart.clearCart();
       onOpenChange(false);
@@ -71,7 +72,7 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
           description:
             "Te abrimos WhatsApp para que completes el pedido por ahí con los mismos datos.",
         });
-        openWhatsAppOrder(whatsappDigits, details, cart.lines, cart.subtotal);
+        openWhatsAppOrder(whatsappDigits, details, cart.lines, cart.subtotal, cart.hasUnpriced);
         cart.clearCart();
         onOpenChange(false);
       } else {
@@ -97,11 +98,11 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
       });
       return;
     }
-    openWhatsAppOrder(whatsappDigits, details, cart.lines, cart.subtotal);
+    openWhatsAppOrder(whatsappDigits, details, cart.lines, cart.subtotal, cart.hasUnpriced);
     toast({
       variant: "success",
       title: "WhatsApp abierto",
-      description: `Total productos ${formatPyg(cart.subtotal)} (sin delivery). Confirmá el mensaje para el local.`,
+      description: `Total productos ${formatCartTotal(cart.subtotal, cart.hasUnpriced)} (sin delivery). Confirmá el mensaje para el local.`,
     });
     cart.clearCart();
     onOpenChange(false);
@@ -197,7 +198,7 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
                             </button>
                           </div>
                           <p className="text-sm font-semibold text-neutral-900">
-                            {formatPyg(product.price * quantity)}
+                            {formatLinePrice(product.price, quantity)}
                           </p>
                         </div>
                       </div>
@@ -214,7 +215,7 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
                         Total productos
                       </span>
                       <span className="text-lg font-bold tracking-tight tabular-nums">
-                        {formatPyg(cart.subtotal)}
+                        {formatCartTotal(cart.subtotal, cart.hasUnpriced)}
                       </span>
                     </div>
                     <p className="text-xs leading-snug text-neutral-500">

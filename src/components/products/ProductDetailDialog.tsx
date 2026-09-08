@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { formatPyg } from "@/lib/format-currency";
+import { formatProductPrice } from "@/lib/format-currency";
 import { useAddToCartWithToast } from "@/hooks/useAddToCartWithToast";
 import { cn } from "@/lib/utils";
 
@@ -51,7 +51,7 @@ export function ProductDetailDialog({
         <DialogHeader className="shrink-0 border-b border-neutral-100 px-6 pb-4 pt-6 pr-14">
           <DialogTitle className="pr-2">{product.title}</DialogTitle>
           <DialogDescription className="text-base font-semibold tabular-nums text-neutral-900">
-            {formatPyg(product.price)}
+            {formatProductPrice(product.price)}
           </DialogDescription>
         </DialogHeader>
 
@@ -69,7 +69,7 @@ export function ProductDetailDialog({
             </div>
 
             {showThumbs ? (
-              <div className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <div className="flex gap-3 overflow-x-auto px-1 py-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {gallery.map((src, i) => (
                   <button
                     key={`${product.id}-${src}-${i}`}
@@ -77,19 +77,21 @@ export function ProductDetailDialog({
                     aria-label={`Vista ${i + 1} de ${gallery.length}`}
                     aria-current={i === thumbIdx}
                     className={cn(
-                      "relative h-16 w-16 shrink-0 overflow-hidden rounded-lg ring-2 ring-offset-2 ring-offset-white transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-brand-red",
+                      "relative h-16 w-16 shrink-0 rounded-lg ring-2 ring-offset-2 ring-offset-white transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-brand-red",
                       i === thumbIdx
                         ? "ring-brand-red"
                         : "ring-transparent opacity-80 hover:ring-neutral-300",
                     )}
                     onClick={() => setThumbIdx(i)}
                   >
-                    <ProductImage
-                      product={product}
-                      preferUrl={src}
-                      alt=""
-                      className="h-full w-full object-cover"
-                    />
+                    <span className="absolute inset-0 overflow-hidden rounded-[7px]">
+                      <ProductImage
+                        product={product}
+                        preferUrl={src}
+                        alt=""
+                        className="h-full w-full object-cover"
+                      />
+                    </span>
                   </button>
                 ))}
               </div>
@@ -118,7 +120,7 @@ export function ProductDetailDialog({
             }}
           >
             <ShoppingBag className="h-5 w-5" aria-hidden />
-            Agregar al carrito · {formatPyg(product.price)}
+            Agregar al carrito · {formatProductPrice(product.price)}
           </Button>
         </div>
       </DialogContent>

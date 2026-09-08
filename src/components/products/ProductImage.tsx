@@ -39,6 +39,7 @@ export function ProductImage({
       alt={alt}
       loading="lazy"
       decoding="async"
+      draggable={false}
       className={className}
       onError={() =>
         setIdx((i) => {

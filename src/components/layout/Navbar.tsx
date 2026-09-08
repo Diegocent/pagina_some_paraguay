@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Menu, ShoppingBag } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -7,11 +8,11 @@ import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { href: "#inicio", label: "Inicio" },
-  { href: "#destacados", label: "Destacados" },
-  { href: "#catalogo", label: "Catálogo" },
-  { href: "#nosotros", label: "Sobre nosotros" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "/#inicio", label: "Inicio" },
+  { href: "/#destacados", label: "Destacados" },
+  { href: "/#catalogo", label: "Catálogo" },
+  { href: "/#nosotros", label: "Sobre nosotros" },
+  { href: "/#contacto", label: "Contacto" },
 ];
 
 export interface NavbarProps {
@@ -25,12 +26,12 @@ export function Navbar({ onOpenCart }: NavbarProps) {
   return (
     <header className="sticky top-0 z-40 border-b border-neutral-100 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-        <a href="#inicio" className="flex items-center gap-2 font-semibold tracking-tight">
+        <Link to="/" className="flex items-center gap-2 font-semibold tracking-tight">
           <SiteLogo variant="light-bg" />
           <span className="hidden text-lg text-neutral-900 sm:inline">
             SOME Paraguay
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Principal">
           {NAV.map((link) => (

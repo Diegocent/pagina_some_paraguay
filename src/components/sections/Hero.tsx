@@ -1,10 +1,8 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import heroCover from "@/assets/products/portada_de_pagina web.jpg";
 import { Button } from "@/components/ui/button";
 import { WaIcon } from "@/components/branding/WaIcon";
-
-const HERO_BG =
-  "https://image.slidesdocs.com/responsive-images/background/training-equipment-in-of-dark-concept-fitness-room-featuring-black-dumbbells-on-the-floor-in-3d-rendering-powerpoint-background_5dbb56997b__960_540.jpg";
 
 export function Hero() {
   return (
@@ -14,7 +12,7 @@ export function Hero() {
     >
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${HERO_BG})` }}
+        style={{ backgroundImage: `url(${heroCover})` }}
         aria-hidden
       />
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/25" />

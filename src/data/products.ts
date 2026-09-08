@@ -8,7 +8,7 @@ export interface Product {
   id: string;
   title: string;
   description: string;
-  price: number;
+  price?: number;
   /** Prefijo de archivos en `src/assets/products/` */
   imageCode: string;
   /** Primera imagen (portada). */
@@ -33,15 +33,19 @@ export const PRODUCTS: Product[] = RAW_CATALOG.map(hydrate);
 
 /** IDs para la sección destacados — reordená o cambiá según stock */
 export const FEATURED_IDS = [
-  "step_madera",
-  "combo_bolsa_step",
+  "step_de_madera",
+  "combo_bolsa_mas_step_de_madera",
   "tatami",
-  "bolsa_boxeo_180cm",
-  "pelota_medicinal_10kg",
-  "chaleco_peso_12kg",
+  "combo_gluteos",
+  "pelota_medicinal_10k",
+  "chaleco_con_peso_12kg",
   "colchoneta",
-  "rodillo_abdominal_premiun",
+  "trineo",
 ] as const;
+
+export function getProductById(id: string) {
+  return PRODUCTS.find((p) => p.id === id);
+}
 
 export function getFeaturedProducts(): Product[] {
   return FEATURED_IDS.map((id) => PRODUCTS.find((p) => p.id === id)).filter(

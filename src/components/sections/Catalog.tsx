@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, ArrowUpDown } from "lucide-react";
 import { useMemo, useState } from "react";
 import { ProductCard } from "@/components/products/ProductCard";
-import { PRODUCTS, type Product } from "@/data/products";
+import { PRODUCTS } from "@/data/products";
 import { useAddToCartWithToast } from "@/hooks/useAddToCartWithToast";
 
 type SortOption = "default" | "price-asc" | "price-desc" | "name-asc" | "name-desc";
@@ -15,11 +15,7 @@ const SORT_LABELS: Record<SortOption, string> = {
   "name-desc": "Nombre: Z → A",
 };
 
-export interface CatalogProps {
-  onSelectProduct?: (product: Product) => void;
-}
-
-export function Catalog({ onSelectProduct }: CatalogProps) {
+export function Catalog() {
   const addToCart = useAddToCartWithToast();
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortOption>("default");
@@ -36,10 +32,10 @@ export function Catalog({ onSelectProduct }: CatalogProps) {
 
     switch (sort) {
       case "price-asc":
-        list.sort((a, b) => a.price - b.price);
+        list.sort((a, b) => (a.price ?? Number.POSITIVE_INFINITY) - (b.price ?? Number.POSITIVE_INFINITY));
         break;
       case "price-desc":
-        list.sort((a, b) => b.price - a.price);
+        list.sort((a, b) => (b.price ?? -1) - (a.price ?? -1));
         break;
       case "name-asc":
         list.sort((a, b) => a.title.localeCompare(b.title, "es"));
@@ -120,7 +116,6 @@ export function Catalog({ onSelectProduct }: CatalogProps) {
                   key={product.id}
                   product={product}
                   onAddToCart={addToCart}
-                  onViewDetails={onSelectProduct}
                 />
               ))}
             </AnimatePresence>

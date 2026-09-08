@@ -1,16 +1,18 @@
 import type { CartLine, ShippingDetails } from "@/context/cart-types";
-import { formatPyg } from "@/lib/format-currency";
+import { formatCartTotal, formatLinePrice } from "@/lib/format-currency";
 
 export function formatOrderPlainText(
   customer: ShippingDetails,
   lines: CartLine[],
   total: number,
+  hasUnpriced = false,
 ): string {
   const linesBlock = lines
     .map(
       (l, i) =>
-        `${i + 1}. ${l.product.title} x${l.quantity} — ${formatPyg(
-          l.product.price * l.quantity,
+        `${i + 1}. ${l.product.title} x${l.quantity} — ${formatLinePrice(
+          l.product.price,
+          l.quantity,
         )}`,
     )
     .join("\n");
@@ -31,7 +33,7 @@ export function formatOrderPlainText(
     `Productos:`,
     linesBlock,
     "",
-    `Total productos (sin incluir costo de envío/delivery): ${formatPyg(total)}`,
+    `Total productos (sin incluir costo de envío/delivery): ${formatCartTotal(total, hasUnpriced)}`,
     `(Los montos son solo por ítems; el envío se cotiza aparte si aplica.)`,
     "",
     "Gracias.",
@@ -44,8 +46,9 @@ export function openWhatsAppOrder(
   customer: ShippingDetails,
   lines: CartLine[],
   total: number,
+  hasUnpriced = false,
 ): void {
-  const text = formatOrderPlainText(customer, lines, total);
+  const text = formatOrderPlainText(customer, lines, total, hasUnpriced);
   const encoded = encodeURIComponent(text);
   const url = `https://api.whatsapp.com/send?phone=${phoneDigits}&text=${encoded}`;
   window.open(url, "_blank", "noopener,noreferrer");

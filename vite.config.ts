@@ -4,9 +4,10 @@ import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, loadEnv, type Plugin } from "vite";
+import { RAW_CATALOG } from "./src/data/catalog-data";
+import { applyProductSeoToHtml, buildSitemapXml } from "./src/lib/seo";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 const DEFAULT_SITE_URL = "https://www.someparaguay.com";
 
 function normalizeSiteUrl(raw: string | undefined): string {
@@ -37,21 +38,25 @@ function seoPublicFiles(siteUrl: string, googleVerification: string): Plugin {
       const outDir = path.resolve(__dirname, "dist");
       if (!fs.existsSync(outDir)) return;
 
-      const loc = `${siteUrl}/`;
-      const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${loc}</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <lastmod>${lastmod}</lastmod>
-  </url>
-</urlset>
-`;
+      const sitemap = buildSitemapXml(RAW_CATALOG, siteUrl, lastmod);
       fs.writeFileSync(path.join(outDir, "sitemap.xml"), sitemap);
+      fs.writeFileSync(path.resolve(__dirname, "public/sitemap.xml"), sitemap);
 
       const robots = `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`;
       fs.writeFileSync(path.join(outDir, "robots.txt"), robots);
+
+      const indexHtmlPath = path.join(outDir, "index.html");
+      if (fs.existsSync(indexHtmlPath)) {
+        const indexHtml = fs.readFileSync(indexHtmlPath, "utf8");
+        for (const product of RAW_CATALOG) {
+          const dir = path.join(outDir, "producto", product.id);
+          fs.mkdirSync(dir, { recursive: true });
+          fs.writeFileSync(
+            path.join(dir, "index.html"),
+            applyProductSeoToHtml(indexHtml, product, siteUrl),
+          );
+        }
+      }
     },
   };
 }
@@ -71,6 +76,10 @@ export default defineConfig(({ mode }) => {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
+    },
+    server: {
+      port: 5252,
+      strictPort: true,
     },
   };
 });

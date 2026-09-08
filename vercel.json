@@ -5,5 +5,15 @@
   "framework": "vite",
   "env": {
     "VITE_SITE_URL": "https://www.someparaguay.com"
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/producto/:id",
+      "destination": "/producto/:id/index.html"
+    },
+    {
+      "source": "/((?!sitemap.xml|robots.txt|producto/|.*\\..*).*)",
+      "destination": "/index.html"
+    }
+  ]
 }

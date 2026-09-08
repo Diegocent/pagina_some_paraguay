@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ShoppingBag } from "lucide-react";
 import type { Product } from "@/data/products";
@@ -10,21 +11,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatPyg } from "@/lib/format-currency";
+import { formatProductPrice } from "@/lib/format-currency";
+import { productPath } from "@/lib/product-url";
 import { cn } from "@/lib/utils";
 
 export interface ProductCardProps {
   product: Product;
   onAddToCart: (product: Product) => void;
-  /** Abre el modal de detalle al hacer clic en la ficha (excepto en «Agregar al carrito»). */
-  onViewDetails?: (product: Product) => void;
   className?: string;
 }
 
 export function ProductCard({
   product,
   onAddToCart,
-  onViewDetails,
   className,
 }: ProductCardProps) {
   return (
@@ -38,22 +37,9 @@ export function ProductCard({
       className={cn("h-full", className)}
     >
       <Card className="group flex h-full flex-col overflow-hidden transition-shadow hover:shadow-xl">
-        <div
-          role={onViewDetails ? "button" : undefined}
-          tabIndex={onViewDetails ? 0 : undefined}
-          className={cn(
-            "flex flex-1 flex-col text-left outline-none",
-            onViewDetails &&
-              "cursor-pointer rounded-t-2xl focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2",
-          )}
-          onClick={() => onViewDetails?.(product)}
-          onKeyDown={(e) => {
-            if (!onViewDetails) return;
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              onViewDetails(product);
-            }
-          }}
+        <Link
+          to={productPath(product.id)}
+          className="flex flex-1 flex-col text-left outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2"
         >
           <div className="relative aspect-[4/5] overflow-hidden bg-neutral-100">
             <ProductImage
@@ -75,10 +61,10 @@ export function ProductCard({
               {product.description}
             </p>
             <p className="mt-auto text-xl font-bold tracking-tight text-neutral-900">
-              {formatPyg(product.price)}
+              {formatProductPrice(product.price)}
             </p>
           </CardContent>
-        </div>
+        </Link>
         <CardFooter className="pb-6 pt-0">
           <Button
             type="button"

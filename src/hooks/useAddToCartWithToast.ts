@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import type { Product } from "@/data/products";
 import { useAppToast } from "@/components/providers/toast-provider";
 import { useCart } from "@/context/CartContext";
-import { formatPyg } from "@/lib/format-currency";
+import { formatProductPrice } from "@/lib/format-currency";
 
 export function useAddToCartWithToast() {
   const { addProduct } = useCart();
@@ -14,7 +14,7 @@ export function useAddToCartWithToast() {
       toast({
         variant: "success",
         title: "Agregado al carrito",
-        description: `${product.title} · ${formatPyg(product.price)}`,
+        description: `${product.title} · ${formatProductPrice(product.price)}`,
       });
     },
     [addProduct, toast],

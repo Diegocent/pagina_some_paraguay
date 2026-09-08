@@ -1,6 +1,8 @@
 /**
  * Imágenes en `src/assets/products/` (empaquetadas por Vite) o en `public/products/`
  * servidas como `/products/{codigo}.png`.
+ *
+ * Galería: `nombre.ext` + `nombre_1.ext`, `nombre_2.ext`, … (el número es la vista).
  */
 function resolveGlobUrl(mod: unknown): string {
   if (typeof mod === "string") return mod;
@@ -28,6 +30,10 @@ const IMAGE_MODULES: Record<string, unknown> = {
     eager: true,
     import: "default",
   }),
+  ...import.meta.glob("@/assets/products/*.jfif", {
+    eager: true,
+    import: "default",
+  }),
   ...import.meta.glob("@/assets/products/*.webp", {
     eager: true,
     import: "default",
@@ -40,35 +46,58 @@ const IMAGE_MODULES: Record<string, unknown> = {
 
 export const PRODUCT_IMAGE_FALLBACK = "/favicon.svg";
 
+/** Sufijos `_1`…`_20` son vistas; números más altos (500, 700) forman parte del nombre. */
+const VARIANT_MAX = 20;
+
 function stemFromPath(modulePath: string): string {
   const file = modulePath.split("/").pop() ?? "";
-  return file.replace(/\.[^.]+$/, "").toLowerCase();
+  return file.replace(/\.[^.]+$/, "");
 }
 
-const STEM_TO_URL: Map<string, string> = new Map(
-  Object.entries(IMAGE_MODULES)
-    .map(([path, mod]) => [stemFromPath(path), resolveGlobUrl(mod)] as const)
-    .filter(([, url]) => url.length > 0),
-);
+export function normalizeImageStem(raw: string): string {
+  return raw
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "_")
+    .replace(/_+/g, "_")
+    .replace(/^_|_$/g, "");
+}
 
-function sortIndexForStem(code: string, stem: string): number {
-  if (stem === code) return 0;
-  if (!stem.startsWith(`${code}_`)) return 9999;
-  const suffix = stem.slice(code.length + 1);
-  const num = /^(\d+)$/.exec(suffix);
-  return num ? Number(num[1]) : 888;
+function applyStemAliases(base: string): string {
+  if (base === "colchonetas") return "colchoneta";
+  return base
+    .replace(/^chaleco_con_peso_de_/, "chaleco_con_peso_")
+    .replace(/tobillera_8k$/, "tobillera_8kg");
+}
+
+function parseVariant(rawStem: string): { base: string; index: number } {
+  const normalized = normalizeImageStem(rawStem);
+  const match = /^(.*)_(\d+)$/.exec(normalized);
+  if (match) {
+    const num = Number(match[2]);
+    if (num >= 1 && num <= VARIANT_MAX) {
+      return { base: applyStemAliases(match[1]), index: num };
+    }
+  }
+  return { base: applyStemAliases(normalized), index: 0 };
 }
 
 /** Archivos en `src/assets/products/` detectados en build. */
 export function galleryUrlsFromSrcAssets(imageCode: string): string[] {
-  const code = imageCode.trim().toLowerCase();
-  const stems = [...STEM_TO_URL.keys()].filter(
-    (stem) => stem === code || stem.startsWith(`${code}_`),
-  );
-  stems.sort(
-    (a, b) => sortIndexForStem(code, a) - sortIndexForStem(code, b),
-  );
-  return stems.map((s) => STEM_TO_URL.get(s)!);
+  const wanted = applyStemAliases(normalizeImageStem(imageCode));
+  const scored: { index: number; url: string }[] = [];
+
+  for (const [path, mod] of Object.entries(IMAGE_MODULES)) {
+    const url = resolveGlobUrl(mod);
+    if (!url) continue;
+    const { base, index } = parseVariant(stemFromPath(path));
+    if (base === wanted) scored.push({ index, url });
+  }
+
+  scored.sort((a, b) => a.index - b.index);
+  return [...new Set(scored.map((item) => item.url))];
 }
 
 function publicPrimaryPng(imageCode: string): string {
@@ -106,6 +135,7 @@ export function getProductDisplayCandidates(product: {
       `/products/${c}.png`,
       `/products/${c}.jpg`,
       `/products/${c}.jpeg`,
+      `/products/${c}.jfif`,
       `/products/${c}.webp`,
       PRODUCT_IMAGE_FALLBACK,
     ];

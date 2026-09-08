@@ -64,7 +64,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const subtotal = useMemo(
     () =>
-      lines.reduce((acc, l) => acc + l.product.price * l.quantity, 0),
+      lines.reduce(
+        (acc, l) => acc + (l.product.price ?? 0) * l.quantity,
+        0,
+      ),
+    [lines],
+  );
+
+  const hasUnpriced = useMemo(
+    () => lines.some((l) => l.product.price == null),
     [lines],
   );
 
@@ -73,6 +81,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       lines,
       itemCount,
       subtotal,
+      hasUnpriced,
       addProduct,
       removeLine,
       setQuantity,
@@ -83,6 +92,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     lines,
     itemCount,
     subtotal,
+    hasUnpriced,
     addProduct,
     removeLine,
     setQuantity,

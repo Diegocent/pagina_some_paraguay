@@ -4,15 +4,11 @@ import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
-import { getFeaturedProducts, type Product } from "@/data/products";
+import { getFeaturedProducts } from "@/data/products";
 import { useAddToCartWithToast } from "@/hooks/useAddToCartWithToast";
 import { cn } from "@/lib/utils";
 
-export interface FeaturedProductsProps {
-  onSelectProduct?: (product: Product) => void;
-}
-
-export function FeaturedProducts({ onSelectProduct }: FeaturedProductsProps) {
+export function FeaturedProducts() {
   const addToCart = useAddToCartWithToast();
   const featured = getFeaturedProducts();
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -117,7 +113,6 @@ export function FeaturedProducts({ onSelectProduct }: FeaturedProductsProps) {
                     <ProductCard
                       product={p}
                       onAddToCart={addToCart}
-                      onViewDetails={onSelectProduct}
                     />
                   </div>
                 ))}
@@ -155,7 +150,6 @@ export function FeaturedProducts({ onSelectProduct }: FeaturedProductsProps) {
               key={p.id}
               product={p}
               onAddToCart={addToCart}
-              onViewDetails={onSelectProduct}
             />
           ))}
         </div>
